@@ -18,10 +18,11 @@ class CreateOrdersTable extends Migration
             $table->string('farmer_id');
             $table->string('farmer_name');
             $table->string('order_date');
+            $table->string('order_price');
             $table->string('order_collected');
             $table->integer('product_or_service_id');
             $table->timestamps();
-            $table->enum('Status', ['Active', 'Completed', 'Cancelled'])->default('Active');
+            $table->enum('Status', ['Active', 'Completed', 'Cancelled','Accepted','Denied'])->default('Active');
         });
     }
 

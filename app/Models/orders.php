@@ -14,6 +14,7 @@ class orders extends Model
         'order_date',
         'order_collected',
         'product_or_service_id',
+        'order_price',
         'Status',
     ];
 }

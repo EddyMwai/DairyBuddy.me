@@ -11,14 +11,31 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Orders;
+use App\Models\ExtensionService;
 
 class AdminController extends Controller
 {
 
-
     public function logout(){
         session()->forget('adminLogin');
         return redirect('/login');
+    }
+
+            public function storeMilk(Request $request)
+    {
+        $milk = new Milk;
+
+        $milk->farmer_id = $request->input('uid');
+        $milk->quantity = $request->input('quan');
+        $milk->quality = $request->input('qual');
+        $milk->date = $request->input('date');
+        $milk->time = $request->input('time');
+        $milk->payable_amount = $request->input('price');
+
+        $milk->save();
+
+        return redirect()->back();
     }
     
      public function registerUser(Request $request){
@@ -56,10 +73,104 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-        public function update_graduation($id){
+        public function activateUser($id){
         $data = User::find($id);
         $data->Status='Active';
         $data->save();
+        return redirect()->back();
+    }
+
+        public function completeOrders($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 'Completed';
+        $order->save();
+        return redirect()->back();
+    }
+
+            public function acceptOrders($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 'Accepted';
+        $order->save();
+        return redirect()->back();
+    }
+
+            public function denyOrders($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 'Denied';
+        $order->save();
+        return redirect()->back();
+    }
+
+            public function cancelOrders($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 'Cancelled';
+        $order->save();
+        return redirect()->back();
+    }
+
+            public function payOrders($id)
+    {
+        $order = Order::find($id);
+        $order->status = 'Paid';
+        $order->save();
+        return redirect()->back();
+    }
+
+    public function updateExS(Request $request, $id)
+    {
+        $extensionService = ExtensionService::find($id);
+
+        $extensionService->type = $request->input('type');
+        $extensionService->product_or_service = $request->input('product_or_service');
+        $extensionService->date = $request->input('date');
+        $extensionService->quantity = $request->input('quantity');
+
+        $extensionService->save();
+
+        return redirect()->back();
+    }
+
+    public function storeExs(Request $request)
+    {
+        $extensionService = new ExtensionService;
+
+        $extensionService->type = $request->input('type');
+        $extensionService->product_or_service = $request->input('name');
+        $extensionService->date = $request->input('date');
+        $extensionService->time = $request->input('time');        
+        $extensionService->payable_amount = $request->input('price');
+        $extensionService->user_id = $request->input('uid'); 
+
+        $extensionService->save();
+
+        return redirect()->back();
+    }
+
+    public function destroyExS($id)
+    {
+        $extensionService = ExtensionService::findOrFail($id);
+        $extensionService->delete();
+
+        return redirect()->back();
+    }
+
+        public function completeExs($id)
+    {
+        $exs = ExtensionService::find($id);
+        $exs->status = 'Completed';
+        $exs->save();
+        return redirect()->back();
+    }
+
+            public function payExs($id)
+    {
+        $exs = ExtensionService::find($id);
+        $exs->status = 'Paid';
+        $exs->save();
         return redirect()->back();
     }
 
