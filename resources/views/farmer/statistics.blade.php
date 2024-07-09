@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dairy Buddy - Administrator Homepage</title>
+    <title>Dairy Buddy - Administrator Statistics Page</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -24,6 +24,8 @@
     <style type="text/css">
       
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <div class="container-scroller">
@@ -80,15 +82,15 @@
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                    <ul class="nav">
-            <li class="nav-item" style="background: none;">
-              <a class="nav-link" href="{{url('/home')}}" >
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/home')}}">
                 <span class="menu-title">Dashboard</span>
-                <i class="mdi mdi-speedometer menu-icon" style="color: white;"></i>
+                <i class="mdi mdi-speedometer menu-icon"></i>
               </a>
             </li>
-            <li class="nav-item" >
-              <a class="nav-link" href="{{url('/statistics')}}"  aria-expanded="false" aria-controls="ui-basic">
+            <li class="nav-item" style="background: none;">
+              <a class="nav-link" href="{{url('/statistics1')}}"  aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Statistics</span>
                 <i class="mdi mdi-chart-bar menu-icon" style="color: white;"></i>
               </a>
@@ -101,26 +103,26 @@
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href="{{url('/milk')}}">Milk</a>
+                    <a class="nav-link" href="{{url('/milk1')}}">Milk</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{url('/exs')}}">Extension Services</a>
+                    <a class="nav-link" href="{{url('/exs1')}}">Extension Services</a>
                   </li>                  
                 </ul>
               </div>
             </li>
-<!--             <li class="nav-item">
-              <a class="nav-link" href="{{url('/cart')}}"  aria-expanded="false" aria-controls="ui-basic">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/cart1')}}"  aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">My Cart</span>
                 <i class="mdi mdi-cart menu-icon" style="color: white;"></i>
               </a>
-            </li>  -->
-            <li class="nav-item">
-              <a class="nav-link" href="{{url('/orders')}}"  aria-expanded="false" aria-controls="ui-basic">
+            </li> 
+                        <li class="nav-item">
+              <a class="nav-link" href="{{url('/orders1')}}"  aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Manage Orders</span>
                 <i class="mdi mdi-cash menu-icon" style="color: white;"></i>
               </a>
-            </li>                        
+            </li>           
             <li class="nav-item">
               <a class="nav-link" href="{{ route('profile') }}">
                 <span class="menu-title">Account</span>
@@ -137,7 +139,7 @@
               </a>
             </li>
           </button>
-            </form>                        
+            </form>                       
           </ul>
         </nav>
         <!-- partial -->
@@ -157,15 +159,25 @@
                 </ul>
               </nav>
             </div>
-            <div class="row" id="dash">
-              <div class="col-md-4 stretch-card grid-margin">
+          <div class="row" id="sales">
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Total Expenditure</h4>
+                    <!-- <canvas id="lineChart" style="height:250px"></canvas> -->
+                    <canvas id="lineChart" width="400" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+<!--               <div class="col-lg-12 grid-margin stretch-card">
+   <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Total User(s) <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Total Earnings <i class="mdi mdi-chart-line mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">{{ $userCount }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
+                    <h2 class="mb-5">$ 15,0000</h2>
+                    <h6 class="card-text">Increased by 60%</h6>
                   </div>
                 </div>
               </div>
@@ -173,10 +185,10 @@
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Sales <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Total Orders <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">{{ $ordS }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
+                    <h2 class="mb-5">45,6334</h2>
+                    <h6 class="card-text">Decreased by 10%</h6>
                   </div>
                 </div>
               </div>
@@ -184,70 +196,15 @@
                 <div class="card bg-gradient-success card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Orders <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Total Sales <i class="mdi mdi-diamond mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">{{ $ordC }}</h2>
-                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
+                    <h2 class="mb-5">95,5741</h2>
+                    <h6 class="card-text">Increased by 5%</h6>
                   </div>
                 </div>
               </div>
-               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Collected <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mcol }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Intake <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mintk }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Variance <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mvar }}</h2>
-                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
-                  </div>
-                </div>
-              </div>
-               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Farmer(s) <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $farmCount }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Administrator(s) <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $adminCount }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
-                  </div>
-                </div>
-              </div>
+              </div> -->
             </div>
-          </div>
           <!-- </div> -->
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -263,7 +220,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
@@ -280,8 +236,58 @@
     <script src="assets/js/jquery.cookie.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/chart.js"></script>
+<!--     <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/chart.js"></script> -->
     <!-- End custom js for this page -->
+        <script>
+        $(document).ready(function() {
+            var orders = @json($orders);
+            
+            var labels = [];
+            var totalOrderPrices = [];
+
+            orders.forEach(function(order) {
+                labels.push(order.year);
+                totalOrderPrices.push(order.total_order_price);
+            });
+
+            var chartData = {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Order Price',
+                    data: totalOrderPrices,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+
+            var options = {
+                scales: {
+                    y: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        tension: 0.5
+                    },
+                    point: {
+                        radius: 0
+                    }
+                }
+            };
+
+            var ctx = $("#lineChart").get(0).getContext("2d");
+            var lineChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: options
+            });
+        });
+    </script>
   </body>
 </html>

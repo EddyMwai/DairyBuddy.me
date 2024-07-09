@@ -81,46 +81,63 @@
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#" onclick="change(1);">
+            <li class="nav-item" style="background: none;">
+              <a class="nav-link" href="{{url('/home')}}" >
                 <span class="menu-title">Dashboard</span>
-                <i class="mdi mdi-speedometer menu-icon"></i>
+                <i class="mdi mdi-speedometer menu-icon" style="color: white;"></i>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#" onclick="change(0);" aria-expanded="false" aria-controls="ui-basic">
+            <li class="nav-item" >
+              <a class="nav-link" href="{{url('/statistics1')}}"  aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Statistics</span>
-                <i class="mdi mdi-chart-bar menu-icon"></i>
+                <i class="mdi mdi-chart-bar menu-icon" style="color: white;"></i>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+<li class="nav-item">
+              <a class="nav-link" href="#icons" data-bs-toggle="collapse" aria-expanded="true" aria-controls="icons">
                 <span class="menu-title">Reports</span>
                 <i class="mdi mdi-file-document menu-icon"></i>
               </a>
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
-                    <a class="nav-link" href=""></a>
+                    <a class="nav-link" href="{{url('/milk1')}}">Milk</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{url('/exs1')}}">Extension Services</a>
+                  </li>                  
                 </ul>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" target="_blank">
+              <a class="nav-link" href="{{url('/cart1')}}"  aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">My Cart</span>
+                <i class="mdi mdi-cart menu-icon" style="color: white;"></i>
+              </a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/orders1')}}"  aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Manage Orders</span>
+                <i class="mdi mdi-cash menu-icon" style="color: white;"></i>
+              </a>
+            </li>                        
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('profile') }}">
                 <span class="menu-title">Account</span>
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
             <form action="{{ url('logout') }}" method="POST">
-                                @csrf
+            @csrf
+             <button style="background: transparent; border:0px; text-align: left;" type="submit">
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <button style="background: transparent; border:0px;" type="submit"><span class="menu-title">Logout</span></button>
+               <span class="menu-title">Logout</span>
                 <i class="mdi mdi-power menu-icon"></i>
               </a>
             </li>
-            </form>                       
+          </button>
+            </form>                         
           </ul>
         </nav>
         <!-- partial -->
@@ -142,24 +159,13 @@
             </div>
             <div class="row" id="dash">
               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Balance <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Sales <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Quality of Milk <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
+                    <h2 class="mb-5">{{ $mqual }}</h2>
+                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
                   </div>
                 </div>
               </div>
@@ -167,10 +173,10 @@
                 <div class="card bg-gradient-success card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Orders <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Quantity of Milk Collected<i class="mdi mdi-diamond mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
+                    <h2 class="mb-5">{{ $mquan }}</h2>
+                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
                   </div>
                 </div>
               </div>
@@ -178,10 +184,10 @@
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Collected <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Amount Spent <i class="mdi mdi-chart-line mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6>
+                    <h2 class="mb-5">{{ $amo }} kshs.</h2>
+                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
                   </div>
                 </div>
               </div>
@@ -189,102 +195,15 @@
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Intake <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Requested Services <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Variance <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
-                  </div>
-                </div>
-              </div>
-               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Farmers <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Factory Personnel <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
+                    <h2 class="mb-5">{{ $serv }}</h2>
+                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row" id="sales" style="display: none;">
-<!--                                       <div class="page-header">
-              <h3 class="page-title"> Dashboard </h3>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Charts</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Chart-js</li>
-                </ol>
-              </nav>
-            </div> -->
-              <div class="col-lg-12 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Total Sales</h4>
-                    <canvas id="lineChart" style="height:250px"></canvas>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-12 grid-margin stretch-card">
-   <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Total Earnings <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Total Orders <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Total Sales <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
           <!-- </div> -->
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

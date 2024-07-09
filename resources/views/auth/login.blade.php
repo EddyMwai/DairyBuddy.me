@@ -1,4 +1,4 @@
-<title>Payroll Pro - Administrator Login Page</title>
+<title>Milk Production Management - Login Page</title>
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">

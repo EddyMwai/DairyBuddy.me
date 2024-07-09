@@ -51,16 +51,16 @@
     <!-- End Main Top -->
 
     <!-- Start Main Top -->
-    <header class="main-header">
+    <header class="main-header" >
         <!-- Start Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav" style="height: 70px">
             <div class="container">
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="#"><img src="images/dairy_logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="#"><img src="images/dairy_logo.png" class="logo" alt="" style="width: 50px;"></a>
                 </div>
                 <!-- End Header Navigation -->
 
@@ -68,9 +68,9 @@
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="change(1);">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about" onclick="change(1);">About Us</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>                        
-                        <li class="nav-item"><a class="nav-link" href="#" onclick="change(0);">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('register') }}">Register</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
                     </ul>
                 </div>
@@ -457,8 +457,8 @@
                             <h4>Information</h4>
                             <ul>
                                 <li><a href="#" onclick="change(1);"> About Us</a></li>
-                                <li><a href="#"> Login</a></li>
-                                <li><a href="#" onclick="change(0);"> Register</a></li>
+                                <li><a href="{{ route('login') }}"> Login</a></li>
+                                <li><a href="{{ url('register') }}"> Register</a></li>
                                 <li><a href="#contact"> Contact Us</a></li>
                             </ul>
                         </div>

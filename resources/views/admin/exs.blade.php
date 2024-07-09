@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dairy Buddy - Administrator Homepage</title>
+    <title>Dairy Buddy - Extension Services Page</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/ti-icons/css/themify-icons.css">
@@ -31,7 +31,6 @@
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start" style="background: linear-gradient(to right, #59DF0B 0%, #226E8A 100%);">
           <a class="navbar-brand brand-logo" href="#" style="color: white; font-weight: bold;"><img src="assets/images/dairy_logo.png" alt="logo" style="width: 30px;" /> Dairy Buddy</a>
-          <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a> -->
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -52,10 +51,7 @@
                       <i class="mdi mdi-calendar"></i>
                     </div>
                   </div>
-<!--                   <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                    <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
-                  </div> -->
+
                 </a>
                 <div class="dropdown-divider"></div>
               </div>
@@ -80,11 +76,11 @@
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                    <ul class="nav">
-            <li class="nav-item" style="background: none;">
-              <a class="nav-link" href="{{url('/home')}}" >
+                   <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/home')}}">
                 <span class="menu-title">Dashboard</span>
-                <i class="mdi mdi-speedometer menu-icon" style="color: white;"></i>
+                <i class="mdi mdi-speedometer menu-icon"></i>
               </a>
             </li>
             <li class="nav-item" >
@@ -93,7 +89,7 @@
                 <i class="mdi mdi-chart-bar menu-icon" style="color: white;"></i>
               </a>
             </li>
-<li class="nav-item">
+<li class="nav-item" style="background: black;">
               <a class="nav-link" href="#icons" data-bs-toggle="collapse" aria-expanded="true" aria-controls="icons">
                 <span class="menu-title">Reports</span>
                 <i class="mdi mdi-file-document menu-icon"></i>
@@ -114,13 +110,13 @@
                 <span class="menu-title">My Cart</span>
                 <i class="mdi mdi-cart menu-icon" style="color: white;"></i>
               </a>
-            </li>  -->
-            <li class="nav-item">
+            </li>  --> 
+                        <li class="nav-item">
               <a class="nav-link" href="{{url('/orders')}}"  aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Manage Orders</span>
                 <i class="mdi mdi-cash menu-icon" style="color: white;"></i>
               </a>
-            </li>                        
+            </li>          
             <li class="nav-item">
               <a class="nav-link" href="{{ route('profile') }}">
                 <span class="menu-title">Account</span>
@@ -147,102 +143,96 @@
               <h3 class="page-title">
                 <span class="page-title-icon bg-gradient-primary text-white me-2">
                   <i class="mdi mdi-home"></i>
-                </span> Dashboard
+                </span> <a href="{{url('/home')}}" style="color: black;text-decoration: none;">Dashboard</a> / Extension Service(s) Records
               </h3>
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    <span></span>My Extension Service(s)  <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
                   </li>
                 </ul>
               </nav>
             </div>
             <div class="row" id="dash">
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
+              <div class="col-lg-12 stretch-card">
+                <div class="card">
                   <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Total User(s) <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $userCount }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
+                    <h4 class="card-title">Extension Service(s) </h4>
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th> # </th>
+                          <th> Name </th>
+                          <th> Type </th>
+                          <th> Date & Time </th>
+                          <th> Price </th> 
+                          <th> </th>                                                   
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          @foreach ($exss as $exs)
+                          <td> {{ $exs->id }} </td>                      
+                          <td> {{ $exs->product_or_service }} </td>
+                          <td> {{ $exs->type }} </td>  
+                          <td> {{ $exs->date }} at {{ $exs->time }} </td>
+                          <td> {{ $exs->payable_amount }} </td>
+                          <td> <a href="{{ url('destroyExS',$exs->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Delete This Extension Service ?')">DELETE</a></td> 
+                        </tr>
+                         @endforeach
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
                   <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Sales <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $ordS }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Orders <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $ordC }}</h2>
-                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
-                  </div>
-                </div>
-              </div>
-               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Collected <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mcol }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Intake <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mintk }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Variance <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mvar }}</h2>
-                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
-                  </div>
-                </div>
-              </div>
-               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Farmer(s) <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $farmCount }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Administrator(s) <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $adminCount }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
+                    <h4 class="card-title">Add an Extension Service</h4>
+                    <form class="forms-sample" method="POST" action="{{ url('/storeExS') }}">
+                      @csrf
+                      <div class="form-group">
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Name" name="name" required>
+                        <input type="hidden" name="uid" required value="<?php echo $userId; ?>">
+                        <input type="hidden" name="date" required value="<?php echo date('Y-m-d'); ?>">
+                        <input type="hidden" name="time" required value="<?php 
+                        $date = new DateTime("now", new DateTimeZone('Africa/Nairobi'));
+                        $current_time = $date->format('H:i:s'); 
+                        echo $current_time; ?>">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Type</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Type" name="type" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">Price (in kshs.)</label>
+                        <input type="number" min="1" class="form-control" id="exampleInputPassword4" placeholder="Price (in kshs.)" name="price" required>
+                      </div>
+<!--                       <div class="form-group">
+                        <label for="exampleSelectGender">Gender</label>
+                        <select class="form-select" id="exampleSelectGender">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div> -->
+<!--                       <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="img[]" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-gradient-primary py-3" type="button">Upload</button>
+                          </span>
+                        </div>
+                      </div> -->
+<!--                       <div class="form-group">
+                        <label for="exampleTextarea1">Textarea</label>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                      </div> -->
+                      <button type="submit" class="btn btn-gradient-success me-2">Submit</button>
+                      <button class="btn btn-light" type="reset">Reset</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -263,7 +253,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
