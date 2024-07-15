@@ -6,7 +6,51 @@
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
+            <script src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link rel="stylesheet" href="css/custom.css">
+    <script type="text/javascript">
+                      function validateForm() {
+            var pwrd = document.getElementById("pwd").value;
+            var cpwrd = document.getElementById("cpwd").value;
+            var error = document.getElementById("ep");
+            var error1 = document.getElementById("ep1");
+            var form = document.getElementById("registrationForm");
+
+            if (pwrd === cpwrd) {
+                alert("User Successfully Registered!");
+                console.log("Email Send Initiated...");
+                emailjs.init("1y-x1gjk-3ZTrtF64"); // Account Public Key
+
+                var params = {
+                    from_name: document.querySelector("#fname").value,
+                    from_email: document.querySelector("#email").value,
+                    message: "Thank you for creating an account with Dairy Buddy, login to get started today!",
+                    type: 'Account Registration',
+                };
+
+                var serviceID = "service_igz10ku"; // Email Service ID
+                var templateID = "template_i28u6qk"; // Email Template ID
+
+                emailjs.send(serviceID, templateID, params)
+                    .then(res => {
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        // alert("Failed to send email. Please try again later.");
+                      
+                    });
+                                            setTimeout(() => {
+                        return true; 
+                        }, 1000);
+                
+            } else {
+                error.style.display = "block";
+                error1.style.display = "block";
+                return false;
+            }
+        }
+    </script>
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
@@ -29,7 +73,7 @@
                     <div class="contact-form-right">
                         <h2>GET STARTED</h2>
                         <p>Kindly fill in the form below, to create an account with Dairy Buddy <b>TODAY</b>!</p>
-                        <form id="" action="{{ url('add_user') }}" enctype="multipart/form-data" onsubmit="return validateForm();" method="POST" name="">
+                        <form id="registrationForm" action="{{ url('add_user1') }}" enctype="multipart/form-data" onsubmit="return validateForm();" method="POST" name="">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
@@ -41,6 +85,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input type="email" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
+                                        <input type="hidden" required name="message" id="message" value="Thank you for creating an account with Dair Buddy, login to get started today!">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -89,19 +134,6 @@
     </div>
 
   <script type="text/javascript">
-        function validateForm() {
-            var pwrd = document.getElementById("pwd").value;
-            var cpwrd = document.getElementById("cpwd").value;
-            var error = document.getElementById("ep");
-            var error1 = document.getElementById("ep1");
-            if (pwrd === cpwrd) {
-                return true;
-            } else {
-                error.style.display = "block";
-                error1.style.display = "block";
-                return false;
-            }      
-        }
 
         function hideError() {
             var error = document.getElementById("ep");

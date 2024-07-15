@@ -1,27 +1,3 @@
-<?php
-
-$host = "127.0.0.1";
-$user = "root";
-$pass = ""; // edit if you have set a password
-$name = "dairy_buddy";
-
-try {
-    $dsn = "mysql:host=$host;dbname=$name;charset=utf8";
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-
-    $conn = new PDO($dsn, $user, $pass, $options);
-    echo "Connected successfully";
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -120,6 +96,9 @@ try {
               </a>
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
+                                                      <li class="nav-item">
+                    <a class="nav-link" href="{{url('/users')}}">Farmers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{url('/milk')}}">Milk</a>
                   </li>
@@ -147,17 +126,18 @@ try {
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
-            </form>                       
+            </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li>                       
           </ul>
         </nav>
         <!-- partial -->
@@ -231,16 +211,10 @@ Low Bacteria Counts - {{ $milks->quality }}%
                       <div class="form-group">
                         <label for="exampleInputEmail3">Farmer ID</label>
                 <select required name="uid" class="form-control">
-                <option selected disabled value="0">Select A User ID</option>
-                <?php
-                $sql = "SELECT * FROM `users` WHERE `user_type` = 'farmer'";
-    $stmt = $conn->query($sql);
-    $all_categories = $stmt->fetchAll();
-
-    foreach ($all_categories as $category): ?>
-        <option value="<?php echo htmlspecialchars($category['id']); ?>"><?php echo htmlspecialchars($category['name']); ?></option>
-    <?php endforeach;
-    ?>
+                <option selected disabled value="0">Select A Farmer ID</option>
+                @foreach ($users1 as $user)
+        <option value="{{ $user->id }}">{{ $user->id }}</option>
+        @endforeach
                   </select>
                       </div>
                       <div class="form-group">

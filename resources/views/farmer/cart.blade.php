@@ -24,6 +24,37 @@
     <style type="text/css">
       
     </style>
+    <script type="text/javascript">
+                            function validateForm() {
+                alert("Cart Successfully Cleared!");
+                console.log("Email Send Initiated...");
+                emailjs.init("1y-x1gjk-3ZTrtF64"); // Account Public Key
+
+                var params = {
+                    from_name: document.querySelector("#fname").value,
+                    from_email: document.querySelector("#email").value,
+                    message: "Farmer has checked out their cart!",
+                    type: 'Account Registration',
+                };
+
+                var serviceID = "service_igz10ku"; // Email Service ID
+                var templateID = "template_i28u6qk"; // Email Template ID
+
+                emailjs.send(serviceID, templateID, params)
+                    .then(res => {
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        // alert("Failed to send email. Please try again later.");
+                      
+                    });
+                                            setTimeout(() => {
+                        return true; 
+                        }, 1000);
+              
+        }
+    </script>
   </head>
   <body>
     <div class="container-scroller">
@@ -127,17 +158,18 @@
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
-            </form>                       
+            </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li>                       
           </ul>
         </nav>
         <!-- partial -->
@@ -203,8 +235,10 @@
                             <td>Total Price (in kshs.):</td>
                             <td></td>
                             <td>{{ $total; }}</td>
-                            <td>                    <form action="{{ route('cart.checkout') }}" method="POST">
+                            <td>                    <form action="{{ route('cart.checkout') }}" onsubmit="validateForm();" method="POST">
                         @csrf
+                        <input type="hidden" value="{{$userdetails->email}}" id="email" required>
+                        <input type="hidden" value="{{$userdetails->name}}" id="fname" required>
                         <button type="submit" class="btn btn-success">Checkout</button>
                     </form></td>
                         </tbody>

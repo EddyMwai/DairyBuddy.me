@@ -123,17 +123,18 @@
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
-            </form>                        
+            </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li>                        
           </ul>
         </nav>
         <!-- partial -->

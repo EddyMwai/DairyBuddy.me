@@ -123,17 +123,18 @@
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
             </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li> 
           </ul>
         </nav>
         <!-- partial -->
@@ -163,7 +164,6 @@
                         <tr>
                           <th> # </th>
                           <th> Extension Service ID </th>
-                          <th> Contact Details </th>
                           <th> Price (in kshs.) </th>
                           <th> Status </th> 
                           <th> </th>                                                   
@@ -176,13 +176,10 @@
                           @foreach ($services as $exs)                      
                           <td> {{ $exs->id }} </td>
                           @endforeach
-                          @foreach ($contactDet1 as $cd)                      
-                          <td> {{ $cd->name }} & <br>{{ $cd->phone_number }} or <br>{{ $cd->email }}</td>
-                          @endforeach
                           <td> {{ $morder->order_price }} </td> 
                           <td> {{ $morder->Status }} </td>  
                                                     <?php 
-                          if($morder->Status == "Completed"){
+                          if($morder->Status == "Completed" || $morder->Status == "Cancelled"){
                             ?>
                             <td></td>
                           <?php
@@ -197,7 +194,6 @@
                                                   <tr>
                           <td></td>
                           <td>Total Price (in kshs.)</td>
-                          <td></td>
                           <td></td>
                           <td></td>
                           <td>{{ $myorders->sum('order_price'); }}</td>

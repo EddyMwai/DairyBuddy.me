@@ -96,6 +96,9 @@
               </a>
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
+                                                      <li class="nav-item">
+                    <a class="nav-link" href="{{url('/users')}}">Farmers</a>
+                  </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{url('/milk')}}">Milk</a>
                   </li>
@@ -123,17 +126,18 @@
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
-            </form>                        
+            </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li>                      
           </ul>
         </nav>
         <!-- partial -->
@@ -158,58 +162,55 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Orders(s) </h4>
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th> # </th>
-                          <th> Extension<br> Service ID </th>
-                          <th> Contact Details </th>
-                          <th> Price (in kshs.) </th>
-                          <th> Status </th> 
-                          <th> </th>
-                          <tH></tH>                                                   
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          @foreach ($otherorders as $oorder)
-                          <td> {{ $oorder->id }} </td>
-                          @foreach ($services as $exs)                      
-                          <td> {{ $exs->id }} </td>
-                          @endforeach
-                          @foreach ($contactDet as $cd)                      
-                          <td> {{ $cd->name }} & <br>{{ $cd->phone_number }} or <br>{{ $cd->email }}</td>
-                          @endforeach
-                          <td> {{ $oorder->order_price }} </td> 
-                          <td> {{ $oorder->Status }} </td> 
-                          <?php 
-                          if($oorder->Status == "Completed" || $oorder->Status == "Denied"){
-                            ?>
-                            <td></td>
-                          <?php
-                        }else if($oorder->Status == "Accepted"){
-                          ?>
-                          <td> <a href="{{ url('completeOrder',$oorder->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Complete This Order ?')">COMPLETE</a></td> 
-                          <?php
-                        }else if($oorder->Status == "Active"){
-                          ?>
-                          <td> <a href="{{ url('acceptOrder',$oorder->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Accept This Order ?')">ACCEPT</a></td>
-                          <td> <a href="{{ url('denyOrder',$oorder->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Deny This Order ?')">DENY</a></td> 
-                          <?php
-                        }
-                        ?>
-                        </tr>
-                         @endforeach
-                                                  <tr>
-                          <td></td>
-                          <td>Total Price (in kshs.)</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>{{ $otherorders->sum('order_price'); }}</td>
-                         </tr>
-                      </tbody>
-                    </table>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th style="width: 90px;">Extension Service ID</th>
+      <th>Farmer ID</th>
+      <!-- <th>Contact Details</th> -->
+      <th>Price (in kshs.)</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach ($otherorders as $oorder)
+    <tr>
+      <td>{{ $oorder->id }}</td>
+      <td style="width: 90px;">{{ $services->where('id', $oorder->product_or_service_id)->first()->id }}</td>
+      <td>{{ $oorder->farmer_id }}</td>
+<!--       <td>
+        @php
+          $contact = $contactDet->where('id', $oorder->farmer_id)->first();
+        @endphp
+        {{ $contact->name }} <br>{{ $contact->phone_number }} <br>{{ $contact->email }}
+      </td> -->
+      <td>{{ $oorder->order_price }}</td>
+      <td>{{ $oorder->Status }}</td>
+      <td>
+        @if($oorder->Status == "Completed" || $oorder->Status == "Denied")
+          <!-- No actions -->
+        @elseif($oorder->Status == "Accepted")
+          <a href="{{ url('completeOrder',$oorder->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Complete This Order ?')">COMPLETE</a>
+        @elseif($oorder->Status == "Active")
+          <a href="{{ url('acceptOrder',$oorder->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Accept This Order ?')">ACCEPT</a>
+          <a href="{{ url('denyOrder',$oorder->id) }}" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Deny This Order ?')">DENY</a>
+        @endif
+      </td>
+    </tr>
+    @endforeach
+    <tr>
+      <td></td>
+      <td>Total Price (in kshs.)</td>
+      <td></td>
+      <td></td>
+      <td>{{ $otherorders->sum('order_price') }}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
                   </div>
                 </div>
               </div>

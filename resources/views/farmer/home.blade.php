@@ -127,17 +127,18 @@
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
-            </form>                         
+            </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li>                          
           </ul>
         </nav>
         <!-- partial -->
@@ -158,19 +159,31 @@
               </nav>
             </div>
             <div class="row" id="dash">
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
+              <div class="col-md-6 stretch-card grid-margin">
+                <div class="card bg-success card-img-holder text-white">
+                  <a style="color: white;" href="{{url('/milk1')}}" >
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Quality of Milk <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
                     </h4>
+                    <?php if($mqual == ""){
+                    ?>
+                    <h2 class="mb-5">No Milk Yet...</h2>
+                    <?php
+                    }else{
+                    ?>
                     <h2 class="mb-5">{{ $mqual }}</h2>
+                    <?php
+                    }
+                    ?>
                     <!-- <h6 class="card-text">Decreased by 10%</h6> -->
                   </div>
+                </a>
                 </div>
               </div>
-              <div class="col-md-4 stretch-card grid-margin">
+              <div class="col-md-6 stretch-card grid-margin">
                 <div class="card bg-gradient-success card-img-holder text-white">
+                  <a style="color: white;" href="{{url('/milk1')}}" >
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Quantity of Milk Collected<i class="mdi mdi-diamond mdi-24px float-end"></i>
@@ -178,10 +191,12 @@
                     <h2 class="mb-5">{{ $mquan }}</h2>
                     <!-- <h6 class="card-text">Increased by 5%</h6> -->
                   </div>
+                </a>
                 </div>
               </div>
-               <div class="col-md-4 stretch-card grid-margin">
+               <div class="col-md-6 stretch-card grid-margin">
                 <div class="card bg-gradient-danger card-img-holder text-white">
+                  <a style="color: white;" href="{{url('/orders1')}}" >
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Amount Spent <i class="mdi mdi-chart-line mdi-24px float-end"></i>
@@ -189,10 +204,12 @@
                     <h2 class="mb-5">{{ $amo }} kshs.</h2>
                     <!-- <h6 class="card-text">Increased by 60%</h6> -->
                   </div>
+                </a>
                 </div>
               </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
+              <div class="col-md-6 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                  <a style="color: white;" href="{{url('/orders1')}}" >
                   <div class="card-body">
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Requested Services <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
@@ -200,6 +217,7 @@
                     <h2 class="mb-5">{{ $serv }}</h2>
                     <!-- <h6 class="card-text">Decreased by 10%</h6> -->
                   </div>
+                </a>
                 </div>
               </div>
             </div>

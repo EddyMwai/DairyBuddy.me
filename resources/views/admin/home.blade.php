@@ -101,6 +101,9 @@
               <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item">
+                    <a class="nav-link" href="{{url('/users')}}">Farmers</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link" href="{{url('/milk')}}">Milk</a>
                   </li>
                   <li class="nav-item">
@@ -127,17 +130,18 @@
                 <i class="mdi mdi-account-circle menu-icon"></i>
               </a>
             </li>
+                        <li class="nav-item">
+              <a class="nav-link" href="#">
             <form action="{{ url('logout') }}" method="POST">
             @csrf
              <button style="background: transparent; border:0px; text-align: left;" type="submit">
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+
                <span class="menu-title">Logout</span>
-                <i class="mdi mdi-power menu-icon"></i>
-              </a>
-            </li>
           </button>
-            </form>                        
+            </form>                      
+                            <i class="mdi mdi-power menu-icon"></i>
+                          </a>
+            </li>                        
           </ul>
         </nav>
         <!-- partial -->
@@ -161,88 +165,65 @@
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
+                    <a href="{{ url('/users') }}" style="color: white;"> 
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Total User(s) <i class="mdi mdi-chart-line mdi-24px float-end"></i>
                     </h4>
                     <h2 class="mb-5">{{ $userCount }}</h2>
                     <!-- <h6 class="card-text">Increased by 60%</h6> -->
+                  </a>
                   </div>
                 </div>
               </div>
               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Sales <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $ordS }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Orders <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $ordC }}</h2>
-                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
-                  </div>
-                </div>
-              </div>
-               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-danger card-img-holder text-white">
                   <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Collected <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mcol }}</h2>
-                    <!-- <h6 class="card-text">Increased by 60%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Intake <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mintk }}</h2>
-                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Milk Variance <i class="mdi mdi-diamond mdi-24px float-end"></i>
-                    </h4>
-                    <h2 class="mb-5">{{ $mvar }}</h2>
-                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
-                  </div>
-                </div>
-              </div>
-               <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
-                  <div class="card-body">
+                    <a href="{{ url('/users') }}" style="color: white;"> 
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                     <h4 class="font-weight-normal mb-3">Farmer(s) <i class="mdi mdi-chart-line mdi-24px float-end"></i>
                     </h4>
                     <h2 class="mb-5">{{ $farmCount }}</h2>
                     <!-- <h6 class="card-text">Increased by 60%</h6> -->
+                  </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                  <div class="card-body">
+                    <a href="#" style="color: white;"> 
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Administrator(s) <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ $adminCount }}</h2>
+                    <!-- <h6 class="card-text">Decreased by 10%</h6> -->
+                  </a>
                   </div>
                 </div>
               </div>
               <div class="col-md-4 stretch-card grid-margin">
                 <div class="card bg-gradient-info card-img-holder text-white">
                   <div class="card-body">
+                    <a href="{{ url('/orders') }}" style="color: white;"> 
                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Administrator(s) <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
+                    <h4 class="font-weight-normal mb-3">Sales <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
                     </h4>
-                    <h2 class="mb-5">{{ $adminCount }}</h2>
+                    <h2 class="mb-5">{{ $ordS }}</h2>
                     <!-- <h6 class="card-text">Decreased by 10%</h6> -->
+                  </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white">
+                  <div class="card-body">
+                 <a href="{{ url('/orders') }}" style="color: white;">                    
+                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Orders <i class="mdi mdi-diamond mdi-24px float-end"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ $ordC }}</h2>
+                    <!-- <h6 class="card-text">Increased by 5%</h6> -->
+              </a>                    
                   </div>
                 </div>
               </div>
