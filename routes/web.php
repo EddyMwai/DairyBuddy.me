@@ -46,6 +46,14 @@ Route::get('/statistics', function () {
     return view('admin.statistics', compact('userCount', 'userdetails', 'orders'));
 });
 
+Route::get('/users', function () {
+                        $users = User::where('user_type', '!=', '0')->get();
+                        $userId = auth()->id();
+                        $userdetails = User::where('id', $userId)->first();
+                        $userCount = $users->count();
+    return view('admin.users', compact('userCount', 'userdetails', 'users'));
+});
+
 Route::get('/statistics1', function () {
                         $users = user::all();
                         $userId = auth()->id();
@@ -61,6 +69,7 @@ Route::get('/statistics1', function () {
 });
 
 Route::get('/milk', function () {
+    $users1 = User::where('user_type', '!=', '0')->get();
                         $milk = Milk::where('quantity', '>', 0)->get();
                         $farmers = User::whereExists(function ($query) {
             $query->select(DB::raw(1))
@@ -71,7 +80,7 @@ Route::get('/milk', function () {
                         $users = user::all();
                         $userId = auth()->id();
                         $userdetails = User::where('id', $userId)->first();
-    return view('admin.milk', compact('milk', 'userdetails', 'farmers'));
+    return view('admin.milk', compact('milk', 'userdetails', 'farmers', 'users1'));
 });
 
 Route::get('/milk1', function () {
@@ -108,21 +117,28 @@ Route::get('/orders', function () {
     // Retrieve orders that are not created by the user
     $otherorders = Orders::where('farmer_id', '!=', $userId)->get();
 
-    // Retrieve the product or service IDs from orders
-    $myProductOrServiceIds = $myorders->pluck('product_or_service_id');
-    $otherProductOrServiceIds = $otherorders->pluck('product_or_service_id');
+    // Initialize variables to hold related data
+    $myProductOrServiceIds = collect();
+    $otherProductOrServiceIds = collect();
+    $milks = collect();
+    $services = collect();
+    $contactDet = collect();
+    $contactDet1 = collect();
+    $total = 0;
 
-    // Retrieve related milks and services
-    $milks = Milk::whereIn('id', $myProductOrServiceIds)->get();
-    $services = ExtensionService::whereIn('id', $otherProductOrServiceIds)->get();
+    // Check if there are any orders and retrieve related data accordingly
+    if ($myorders->isNotEmpty()) {
+        $myProductOrServiceIds = $myorders->pluck('product_or_service_id');
+        $milks = Milk::whereIn('id', $myProductOrServiceIds)->get();
+        $contactDet1 = User::whereIn('id', $myorders->pluck('farmer_id'))->get();
+        $total = $myorders->sum('item_price');
+    }
 
-    // Retrieve contact details of farmers who created other orders
-    $contactDet = User::whereIn('id', $otherorders->pluck('farmer_id'))->get();
-
-        // Retrieve contact details of farmers who created other orders
-    $contactDet1 = User::whereIn('id', $myorders->pluck('farmer_id'))->get();
-
-    $total = $myorders->sum('item_price');
+    if ($otherorders->isNotEmpty()) {
+        $otherProductOrServiceIds = $otherorders->pluck('product_or_service_id');
+        $services = ExtensionService::whereIn('id', $otherProductOrServiceIds)->get();
+        $contactDet = User::whereIn('id', $otherorders->pluck('farmer_id'))->get();
+    }
 
     // Retrieve authenticated user's details
     $userdetails = User::findOrFail($userId);
@@ -174,6 +190,8 @@ Route::middleware([
 });
 
 Route::post('/add_user',[AdminController::class,'registerUser']);
+Route::post('/add_user1',[AdminController::class,'registerUser1']);
+Route::post('/update_user',[AdminController::class,'updateUser']);
 
 Route::get('admin/logout',[AdminController::class,'logout']);
 
@@ -208,4 +226,5 @@ Route::post('storeExS', [AdminController::class, 'storeExs']);
 // Route::get('extension-services/{id}', [extension_servicesController::class, 'show']);
 Route::put('extension-services/{id}', [AdminController::class, 'updateExs']);
 Route::get('/destroyExS/{id}',[AdminController::class,'destroyExS']);
+Route::get('/deleteUser/{id}',[AdminController::class,'deleteUser']);
 // Route::post('extension-services/{id}/activate', [extension_servicesController::class, 'activate']);
